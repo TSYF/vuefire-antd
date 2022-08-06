@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "@/stores/user";
 
-export const requireAuth = async () => {
+const requireAuth = async () => {
 	const userStore = useUserStore();
 	userStore.loadingSession = true;
 	const user = await userStore.currentUser();
