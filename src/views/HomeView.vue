@@ -3,6 +3,7 @@
 		<h1>Hellow</h1>
 		<h3>{{ userStore.user.email }}</h3>
 		<h3>{{ userStore.user.uid }}</h3>
+		<br />
 	</div>
 </template>
 

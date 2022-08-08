@@ -7,6 +7,7 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 } from "firebase/auth";
+import { useURLStore } from "./urls";
 
 export const useUserStore = defineStore({
 	id: "userStore",
@@ -50,9 +51,11 @@ export const useUserStore = defineStore({
 			}
 		},
 		async userSignOut() {
+			const URLStore = useURLStore();
 			try {
 				await signOut(auth);
 				this.user = {};
+				URLStore.$reset();
 			} catch (error) {
 				console.error(error);
 			}
@@ -64,7 +67,6 @@ export const useUserStore = defineStore({
 					(user) => {
 						if (user) {
 							this.user = { email: user.email, uid: user.uid };
-							console.log(this.user);
 						} else {
 							this.user = {};
 						}

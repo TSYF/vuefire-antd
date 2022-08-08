@@ -17,9 +17,10 @@
 
 <script setup>
 import { useUserStore } from "@/stores/user.js";
+import { computed } from "vue";
 const userStore = useUserStore();
 
-const isLogged = userStore.isUserLogged;
+const isLogged = computed(() => userStore.isUserLogged);
 
 const signOut = userStore.userSignOut;
 
