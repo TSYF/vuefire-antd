@@ -1,6 +1,8 @@
 import {
 	addDoc,
 	collection,
+	deleteDoc,
+	doc,
 	getDocs,
 	query,
 	where,
@@ -33,8 +35,8 @@ export const useURLStore = defineStore({
 
 				await getDocs(q).then((qs) => {
 					const arr = [];
-					qs.forEach((doc) => {
-						arr.push({ id: doc.id, ...doc.data() });
+					qs.forEach((document) => {
+						arr.push({ id: document.id, ...document.data() });
 					});
 					this.documents = [...arr];
 				});
@@ -58,7 +60,23 @@ export const useURLStore = defineStore({
 
 				const docRef = await addDoc(col, url);
 
+				console.table(docRef);
+
 				this.documents.push(url);
+			} catch (error) {
+				console.error(error);
+			} finally {
+				this.loadingDocs = false;
+			}
+		},
+		async deleteURL(id) {
+			try {
+				this.loadingDocs = true;
+				const docRef = doc(db, "urls", id);
+				await deleteDoc(docRef);
+				this.documents = this.documents.filter(
+					(document) => document.id !== id
+				);
 			} catch (error) {
 				console.error(error);
 			} finally {

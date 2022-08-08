@@ -8,8 +8,8 @@ ID: {{ document.id }}
 NAME: {{ document.name }}
 SHORT:{{ document.short }}
 USER: {{ document.user }}
-				</pre
-				>
+<button @click="URLStore.deleteURL(document.id)">Delete</button>
+				</pre>
 			</li>
 		</ul>
 	</div>
