@@ -1,7 +1,14 @@
-import { collection, getDocs, query, where } from "firebase/firestore/lite";
+import {
+	addDoc,
+	collection,
+	getDocs,
+	query,
+	where,
+} from "firebase/firestore/lite";
 import { db } from "@/firebaseConfig.js";
 import { defineStore } from "pinia";
 import { auth } from "@/firebaseConfig";
+import { nanoid } from "nanoid";
 
 export const useURLStore = defineStore({
 	id: "URLStore",
@@ -33,6 +40,29 @@ export const useURLStore = defineStore({
 				});
 			} catch (error) {
 				console.log(error);
+			} finally {
+				this.loadingDocs = false;
+			}
+		},
+		async addURL(urlName) {
+			try {
+				this.loadingDocs = true;
+
+				const url = {
+					name: urlName,
+					short: nanoid(6),
+					user: auth.currentUser.uid,
+				};
+
+				const col = collection(db, "urls");
+
+				console.table(url);
+
+				const docRef = await addDoc(col, url);
+
+				this.documents.push(url);
+			} catch (error) {
+				console.error(error);
 			} finally {
 				this.loadingDocs = false;
 			}
