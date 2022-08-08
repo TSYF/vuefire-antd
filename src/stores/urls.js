@@ -56,8 +56,6 @@ export const useURLStore = defineStore({
 
 				const col = collection(db, "urls");
 
-				console.table(url);
-
 				const docRef = await addDoc(col, url);
 
 				this.documents.push(url);
