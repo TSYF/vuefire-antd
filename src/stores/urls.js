@@ -6,6 +6,7 @@ import {
 	getDoc,
 	getDocs,
 	query,
+	updateDoc,
 	where,
 } from "firebase/firestore/lite";
 import { db } from "@/firebaseConfig.js";
@@ -74,16 +75,12 @@ export const useURLStore = defineStore({
 		},
 		async deleteURL(id) {
 			try {
-				this.loadingDocs = true;
-
 				const docRef = doc(db, "urls", id);
+				const docSpan = await getDoc(docRef);
 
-				const docum = await getDoc(docRef);
-
-				if (!docum.exists())
+				if (!docSpan.exists())
 					throw new Error("Document to delete doesn't exist");
-
-				if (docum.data().user !== auth.currentUser.uid)
+				if (docSpan.data().user !== auth.currentUser.uid)
 					throw new Error("Document doesn't belong to current user");
 
 				await deleteDoc(docRef);
@@ -94,7 +91,31 @@ export const useURLStore = defineStore({
 			} catch (error) {
 				console.error(error);
 			} finally {
-				this.loadingDocs = false;
+			}
+		},
+		async editURL(id, url) {
+			try {
+				const docRef = doc(db, "urls", id);
+
+				getDoc(docRef).then((document) => {
+					if (!document.exists())
+						throw new Error("Document to update doesn't exist");
+					if (document.data().user !== auth.currentUser.uid)
+						throw new Error(
+							"Document doesn't belong to current user"
+						);
+				});
+
+				await updateDoc(docRef, { name: url });
+
+				this.documents = this.documents.map((item) =>
+					item.id === id
+						? { ...item, name: url, editing: false }
+						: item
+				);
+			} catch (error) {
+				console.error(error);
+			} finally {
 			}
 		},
 	},

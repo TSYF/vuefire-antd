@@ -13,6 +13,9 @@
 
 <script setup>
 import { defineProps, ref } from "vue";
+import { useURLStore } from "@/stores/urls.js";
+
+const URLStore = useURLStore();
 
 const { doc } = defineProps({
 	doc: Object,
@@ -20,5 +23,8 @@ const { doc } = defineProps({
 
 const url = ref("");
 
-const handleSubmit = () => {};
+const handleSubmit = () => {
+	URLStore.editURL(doc.id, url.value);
+	url.value = "";
+};
 </script>

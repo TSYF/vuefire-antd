@@ -9,6 +9,7 @@ NAME: {{ document.name }}
 SHORT:{{ document.short }}
 USER: {{ document.user }}
 <button @click="URLStore.deleteURL(document.id)">Delete</button>
+<button @click="document.editing = true">Edit</button>
 				</pre>
 				<EditURL v-else :doc="document" />
 			</li>
