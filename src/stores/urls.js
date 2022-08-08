@@ -3,6 +3,7 @@ import {
 	collection,
 	deleteDoc,
 	doc,
+	getDoc,
 	getDocs,
 	query,
 	where,
@@ -36,7 +37,11 @@ export const useURLStore = defineStore({
 				await getDocs(q).then((qs) => {
 					const arr = [];
 					qs.forEach((document) => {
-						arr.push({ id: document.id, ...document.data() });
+						arr.push({
+							id: document.id,
+							editing: false,
+							...document.data(),
+						});
 					});
 					this.documents = [...arr];
 				});
@@ -60,9 +65,7 @@ export const useURLStore = defineStore({
 
 				const docRef = await addDoc(col, url);
 
-				console.table(docRef);
-
-				this.documents.push(url);
+				this.documents.push({ editing: false, ...url });
 			} catch (error) {
 				console.error(error);
 			} finally {
@@ -72,8 +75,19 @@ export const useURLStore = defineStore({
 		async deleteURL(id) {
 			try {
 				this.loadingDocs = true;
+
 				const docRef = doc(db, "urls", id);
+
+				const docum = await getDoc(docRef);
+
+				if (!docum.exists())
+					throw new Error("Document to delete doesn't exist");
+
+				if (docum.data().user !== auth.currentUser.uid)
+					throw new Error("Document doesn't belong to current user");
+
 				await deleteDoc(docRef);
+
 				this.documents = this.documents.filter(
 					(document) => document.id !== id
 				);
