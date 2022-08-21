@@ -1,23 +1,34 @@
 <template>
-	<nav>
-		<router-link v-if="isLogged" :to="{ name: 'home' }"
-			>Home |
-		</router-link>
-		<router-link v-if="!isLogged" :to="{ name: 'login' }"
-			>Login |
-		</router-link>
-		<router-link v-if="!isLogged" :to="{ name: 'register' }"
-			>Register
-		</router-link>
-		<button v-if="isLogged" @click="signOut()" :disabled="loadingUser">
+	<a-menu
+		v-model:selectedKeys="selectedKeys"
+		theme="dark"
+		mode="horizontal"
+		:style="{ lineHeight: '64px' }"
+	>
+		<a-menu-item key="home" v-if="isLogged">
+			<router-link :to="{ name: 'home' }">Home</router-link>
+		</a-menu-item>
+		<a-menu-item key="login" v-if="!isLogged">
+			<router-link :to="{ name: 'login' }">Login</router-link>
+		</a-menu-item>
+		<a-menu-item key="register" v-if="!isLogged">
+			<router-link :to="{ name: 'register' }">Register</router-link>
+		</a-menu-item>
+		<a-menu-item
+			@click="signOut()"
+			:disabled="loadingUser"
+			key="logout"
+			v-if="isLogged"
+		>
 			Sign Out
-		</button>
-	</nav>
+		</a-menu-item>
+	</a-menu>
 </template>
 
 <script setup>
 import { useUserStore } from "@/stores/user.js";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 const userStore = useUserStore();
 
 const isLogged = computed(() => userStore.isUserLogged);
@@ -25,4 +36,13 @@ const isLogged = computed(() => userStore.isUserLogged);
 const signOut = userStore.userSignOut;
 
 const loadingUser = userStore.loadingUser;
+
+const route = useRoute();
+
+const selectedKeys = ref([]);
+
+watch(
+	() => route.name,
+	() => (selectedKeys.value = [route.name])
+);
 </script>
