@@ -13,14 +13,17 @@
 	"dependencies": {
 		"@testing-library/vue": "^6.6.1",
 		"@vue/compiler-sfc": "^3.2.37",
+		"ant-design-vue": "^3.2.11",
 		"nanoid": "^4.0.0",
 		"pinia": "^2.0.16",
+		"unplugin-vue-components": "^0.22.4",
 		"vue": "^3.2.37",
 		"vue-router": "^4.1.2"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^3.0.1",
 		"@vue/test-utils": "^2.0.2",
+		"c8": "^7.12.0",
 		"cypress": "^10.3.0",
 		"jsdom": "^20.0.0",
 		"start-server-and-test": "^1.14.0",

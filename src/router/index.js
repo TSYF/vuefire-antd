@@ -4,12 +4,14 @@ import { useUserStore } from "@/stores/user";
 
 const requireAuth = async () => {
 	const userStore = useUserStore();
+
 	userStore.loadingSession = true;
+
 	const user = await userStore.currentUser();
+
 	userStore.loadingSession = false;
-	if (!user) {
-		return { name: "login" };
-	}
+
+	if (!user) return { name: "login" };
 };
 
 const router = createRouter({

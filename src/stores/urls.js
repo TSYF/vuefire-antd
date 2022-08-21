@@ -37,6 +37,8 @@ export const useURLStore = defineStore({
 
 				await getDocs(q).then((qs) => {
 					const arr = [];
+
+					//*#-- Different forEach
 					qs.forEach((document) => {
 						arr.push({
 							id: document.id,
@@ -44,6 +46,7 @@ export const useURLStore = defineStore({
 							...document.data(),
 						});
 					});
+
 					this.documents = [...arr];
 				});
 			} catch (error) {
@@ -67,6 +70,8 @@ export const useURLStore = defineStore({
 				const docRef = await addDoc(col, url);
 
 				this.documents.push({ editing: false, ...url });
+
+				return docRef;
 			} catch (error) {
 				console.error(error);
 			} finally {
