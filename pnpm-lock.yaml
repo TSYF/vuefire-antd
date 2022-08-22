@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@ant-design/icons-vue': ^6.1.0
   '@testing-library/vue': ^6.6.1
   '@vitejs/plugin-vue': ^3.0.1
   '@vue/compiler-sfc': ^3.2.37
@@ -21,6 +22,7 @@ specifiers:
   vue-router: ^4.1.2
 
 dependencies:
+  '@ant-design/icons-vue': 6.1.0_vue@3.2.37
   '@testing-library/vue': 6.6.1_2yymnzrok6eda47acnj2yjm3ae
   '@vue/compiler-sfc': 3.2.37
   ant-design-vue: 3.2.11_vue@3.2.37
