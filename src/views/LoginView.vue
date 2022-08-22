@@ -36,18 +36,14 @@
 
 					name = ?
 					:rules: {} = Object which content will define how antd goes about validating
-					required: boolean = Self-explainatory
-					message: string = Message to be displayed when rules aren't met
-					type: string = For field type specific validations (like with email syntax)
-					whitespace: boolean = For treating whitespace as an error
 			-->
 				<a-form-item
 					name="email"
 					:rules="{
-						required: true,
-						message: 'Email must not be empty and must be valid',
-						type: 'email',
-						whitespace: true
+						required: true, //: boolean = Self-explainatory
+						message: 'Email must not be empty and must be valid', //: string = Message to be displayed when rules aren't met
+						type: 'email', //: string = For field type specific validations (like with email syntax)
+						whitespace: true //: boolean = For treating whitespace as an error
 					}"
 				>
 					<a-input
@@ -60,16 +56,12 @@
 						</template>
 					</a-input>
 				</a-form-item>
-				<!--Definitions:
-				
-					len: int = Minimum value length to be accepted
-				-->
 				<a-form-item
 					name="password"
 					:rules="{
 						required: true,
-						message: '6 character minimum password must not be empty',
-						len: 6,
+						message: 'Password must not be empty and must have at least 6 characters',
+						len: 6, //: int = Minimum character length to be accepted
 						whitespace: true
 					}"
 				>
