@@ -5,13 +5,22 @@
 		mode="horizontal"
 		:style="{ lineHeight: '64px' }"
 	>
-		<a-menu-item key="home" v-if="isLogged">
+		<a-menu-item
+			key="home"
+			v-if="isLogged"
+		>
 			<router-link :to="{ name: 'home' }">Home</router-link>
 		</a-menu-item>
-		<a-menu-item key="login" v-if="!isLogged">
+		<a-menu-item
+			key="login"
+			v-if="!isLogged"
+		>
 			<router-link :to="{ name: 'login' }">Login</router-link>
 		</a-menu-item>
-		<a-menu-item key="register" v-if="!isLogged">
+		<a-menu-item
+			key="register"
+			v-if="!isLogged"
+		>
 			<router-link :to="{ name: 'register' }">Register</router-link>
 		</a-menu-item>
 		<a-menu-item
@@ -28,12 +37,14 @@
 <script setup>
 import { useUserStore } from "@/stores/user.js";
 import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const userStore = useUserStore();
 
 const isLogged = computed(() => userStore.isUserLogged);
 
-const signOut = userStore.userSignOut;
+const router = useRouter();
+
+const signOut = () => userStore.userSignOut().then(() => router.push({ name: "login" }));
 
 const loadingUser = userStore.loadingUser;
 
