@@ -61,7 +61,7 @@
 					:rules="{
 						required: true,
 						message: 'Password must not be empty and must have at least 6 characters',
-						len: 6, //: int = Minimum character length to be accepted
+						min: 6, //: int = Minimum character length to be accepted
 						whitespace: true
 					}"
 				>
