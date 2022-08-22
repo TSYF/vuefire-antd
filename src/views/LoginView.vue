@@ -2,10 +2,29 @@
 	<a-row :style="{
 		padding: '3rem'
 	}">
+		<!--Definitions:
+
+			span: int = Defines ammount of column space which current column uses. There's 24 columns per row.
+			offset: int = Defines ammount of empty columns before current one.
+
+			Span and offset can be set as individual attributes, or as an attribute
+			belonging to an object binded to a breakpoint prop.
+
+			Breakpoints' prop names:
+				xs, sm, md, lg, xl, xxl, xxxl
+		-->
 		<a-col
 			:xs="{ span: 24 }"
 			:lg="{ span: 12, offset: 6 }"
 		>
+			<!--Definitions:
+
+				:model: {} = Variable that is to be used for validation purposes
+				name = ?
+				autocomplete: [on|off] = Self-explainatory
+				@finish = Replaces @submit.prevent for the purpose of applying validations beforehand
+				layout: [vertical|horizontal] = Defines the form's content distribution
+			-->
 			<a-form
 				:model="user"
 				name="login"
@@ -13,6 +32,15 @@
 				layout="vertical"
 				@finish="login()"
 			>
+				<!--Definitions:
+
+					name = ?
+					:rules: {} = Object which content will define how antd goes about validating
+					required: boolean = Self-explainatory
+					message: string = Message to be displayed when rules aren't met
+					type: string = For field type specific validations (like with email syntax)
+					whitespace: boolean = For treating whitespace as an error
+			-->
 				<a-form-item
 					name="email"
 					:rules="{
@@ -28,6 +56,10 @@
 						type="email"
 					/>
 				</a-form-item>
+				<!--Definitions:
+				
+					len: int = Minimum value length to be accepted
+				-->
 				<a-form-item
 					name="password"
 					:rules="{
@@ -58,7 +90,7 @@
 <script setup>
 import { useUserStore } from "@/stores/user.js"
 import { useRouter } from "vue-router";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 
 const userStore = useUserStore();
 
