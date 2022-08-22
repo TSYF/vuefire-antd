@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import { useURLStore } from "@/stores/urls.js";
 
 const URLStore = useURLStore();

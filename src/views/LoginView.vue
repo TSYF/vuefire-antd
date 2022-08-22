@@ -54,7 +54,11 @@
 						v-model:value="user.email"
 						placeholder="Email"
 						type="email"
-					/>
+					>
+						<template #prefix>
+							<user-outlined class="user-outlined" />&nbsp;
+						</template>
+					</a-input>
 				</a-form-item>
 				<!--Definitions:
 				
@@ -72,7 +76,11 @@
 					<a-input-password
 						v-model:value="user.password"
 						placeholder="Password"
-					/>
+					>
+						<template #prefix>
+							<lock-outlined />&nbsp;
+						</template>
+					</a-input-password>
 				</a-form-item>
 				<a-form-item>
 					<a-button
@@ -88,6 +96,7 @@
 </template>
 
 <script setup>
+import { UserOutlined, LockOutlined } from "@ant-design/icons-vue"
 import { useUserStore } from "@/stores/user.js"
 import { useRouter } from "vue-router";
 import { reactive } from "vue";
