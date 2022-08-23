@@ -28,7 +28,7 @@ export const useUserStore = defineStore({
 				console.log(user);
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			} finally {
 				this.loadingUser = false;
 			}
@@ -45,7 +45,7 @@ export const useUserStore = defineStore({
 					.then(({ email, uid }) => ({ email, uid }));
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			} finally {
 				this.loadingUser = false;
 			}
@@ -58,7 +58,7 @@ export const useUserStore = defineStore({
 				URLStore.$reset(); //*#-- Resets all data in the store to it's initial state 
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			}
 		},
 		currentUser() {

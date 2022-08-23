@@ -109,10 +109,8 @@ const registerUser = () => {
 			user.email = "";
 			user.password = "";
 			user.checkPassword = "";
-			return res;
-		}).then((errorCode) => {
-			if (!errorCode) return message.success("Successful registry");
-
+			message.success("Successful registry");
+		}).catch((errorCode) => {
 			switch (errorCode) {
 				case "auth/invalid-email":
 					message.error("Credentials don't meet requirements.")

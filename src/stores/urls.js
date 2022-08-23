@@ -53,7 +53,7 @@ export const useURLStore = defineStore({
 				});
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			} finally {
 				this.loadingDocs = false;
 			}
@@ -75,7 +75,7 @@ export const useURLStore = defineStore({
 				this.documents.push({ editing: false, id: docRef.id, ...url });
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			} finally {
 				this.loadingCDDocs = false;
 			}
@@ -98,7 +98,7 @@ export const useURLStore = defineStore({
 				);
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			} finally {
 				this.loadingCDDocs = false;
 			}
@@ -125,7 +125,7 @@ export const useURLStore = defineStore({
 				);
 			} catch (error) {
 				console.error(error.code);
-				return error.code;
+				return Promise.reject(error.code);
 			} finally {
 			}
 		},

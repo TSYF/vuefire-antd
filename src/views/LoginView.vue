@@ -101,14 +101,12 @@ const router = useRouter();
 
 const login = async () => {
 	userStore.emailSignIn(user.email, user.password)
-		.then((res) => {
-			router.push({ name: "home" })
+		.then(() => {
 			user.email = "";
 			user.password = "";
-			return res;
-		}).then((errorCode) => {
-			if (!errorCode) return message.success("Successful sign in");
-
+			message.success("Successful sign in")
+			router.push({ name: "home" })
+		}).catch((errorCode) => {
 			switch (errorCode) {
 				case "auth/user-not-found":
 					message.error("Invalid credentials.");
