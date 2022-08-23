@@ -19,7 +19,8 @@ export const useURLStore = defineStore({
 	state: () => ({
 		documents: [],
 		loadingDocs: false,
-		loadingAddingDocs: false
+		loadingAddingDocs: false,
+		regex: /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/
 	}),
 	actions: {
 		async getURLS() {

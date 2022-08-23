@@ -12,8 +12,8 @@
 			:rules="{
 				required: true,
 				whitespace: true,
-				pattern: urlRegex,
-				message: 'Ingrese una url válida'
+				pattern: URLStore.regex,
+				message: 'Enter a valid URL'
 			}"
 		>
 			<a-input
@@ -50,6 +50,4 @@ const handleSubmit = () => {
 		.then(() => message.success("URL Added!"))
 		.catch(() => message.error("Something went wrong... :c"));
 };
-
-const urlRegex = /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
 </script>
