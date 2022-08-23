@@ -108,6 +108,7 @@ const registerUser = () => {
 		.then((res) => {
 			user.email = "";
 			user.password = "";
+			user.checkPassword = "";
 			return res;
 		}).then((errorCode) => {
 			if (!errorCode) return message.success("Successful registry");
