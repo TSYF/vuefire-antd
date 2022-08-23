@@ -1,20 +1,55 @@
 <template>
-	<form @submit.prevent="handleSubmit()">
-		<input v-model="url" placeholder="Insert URL" type="text" name="url" />
-		<button type="submit">Agregar</button>
-	</form>
+	<a-form
+		name="URLForm"
+		autocomplete="off"
+		layout="inline"
+		:model="formState"
+		@finish="handleSubmit()"
+	>
+		<a-form-item
+			name="url"
+			label="URL"
+			:rules="{
+				required: true,
+				whitespace: true,
+				pattern: urlRegex,
+				message: 'Ingrese una url válida'
+			}"
+		>
+			<a-input
+				v-model:value="formState.url"
+				placeholder="URL"
+				type="text"
+				name="url"
+			/>
+		</a-form-item>
+		<a-form-item>
+			<a-button
+				html-type="submit"
+				type="primary"
+				:disabled="URLStore.loadingAddingDocs"
+				:loading="URLStore.loadingAddingDocs"
+			>Agregar</a-button>
+		</a-form-item>
+	</a-form>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive } from 'vue';
 import { useURLStore } from "@/stores/urls.js";
+import { message } from 'ant-design-vue';
 
 const URLStore = useURLStore();
 
-const url = ref("");
+
+const formState = reactive({ url: "" })
 
 const handleSubmit = () => {
-	URLStore.addURL(url.value);
-	url.value = "";
+	URLStore.addURL(formState.url)
+		.then((res) => formState.url = "" || res)
+		.then(() => message.success("URL Added!"))
+		.catch(() => message.error("Something went wrong... :c"));
 };
+
+const urlRegex = /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
 </script>
