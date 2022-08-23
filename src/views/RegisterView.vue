@@ -82,6 +82,7 @@
 						name="registerButton"
 						html-type="submit"
 						:disabled="userStore.loadingUser"
+						:loading="userStore.loadingUser"
 					>
 						Submit
 					</a-button>
@@ -95,6 +96,7 @@
 import { useUserStore } from "../stores/user.js";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+import { message } from "ant-design-vue";
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
 
 const userStore = useUserStore();
@@ -103,10 +105,27 @@ const router = useRouter();
 
 const registerUser = () => {
 	userStore.registerUser(user.email, user.password)
-		.then(() => {
+		.then((res) => {
 			user.email = "";
 			user.password = "";
-			router.push({ name: "home" });
+			return res;
+		}).then((errorCode) => {
+			if (!errorCode) return message.success("Successful registry");
+
+			switch (errorCode) {
+				case "auth/invalid-email":
+					message.error("Credentials don't meet requirements.")
+					break;
+				case "auth/invalid-password":
+					message.error("Credentials don't meet requirements.")
+					break;
+				case "auth/email-already-in-use":
+					message.error("Email already in use")
+					break;
+				default:
+					message.error("Something went wrong... :c")
+					break;
+			}
 		});
 };
 
@@ -117,6 +136,7 @@ const user = reactive({
 })
 
 const checkPass = async (_rule, value) => ((value !== user.password) ? Promise.reject('Passwords don\'t match') : Promise.resolve());
+
 </script>
 
 <style lang="scss" scoped>
