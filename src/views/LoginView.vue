@@ -78,6 +78,7 @@
 					<a-button
 						html-type="submit"
 						:disabled="userStore.loadingUser"
+						:loading="userStore.loadingUser"
 					>
 						Submit
 					</a-button>
