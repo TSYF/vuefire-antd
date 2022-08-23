@@ -19,7 +19,7 @@ export const useURLStore = defineStore({
 	state: () => ({
 		documents: [],
 		loadingDocs: false,
-		loadingAddingDocs: false,
+		loadingCDDocs: false,
 		regex: /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/
 	}),
 	actions: {
@@ -60,7 +60,7 @@ export const useURLStore = defineStore({
 		},
 		async addURL(urlName) {
 			try {
-				this.loadingAddingDocs = true;
+				this.loadingCDDocs = true;
 
 				const url = {
 					name: urlName,
@@ -77,11 +77,12 @@ export const useURLStore = defineStore({
 				console.error(error.code);
 				return error.code;
 			} finally {
-				this.loadingAddingDocs = false;
+				this.loadingCDDocs = false;
 			}
 		},
 		async deleteURL(id) {
 			try {
+				this.loadingCDDocs = true;
 				const docRef = doc(db, "urls", id);
 				const docSpan = await getDoc(docRef);
 
@@ -99,6 +100,7 @@ export const useURLStore = defineStore({
 				console.error(error.code);
 				return error.code;
 			} finally {
+				this.loadingCDDocs = false;
 			}
 		},
 		async editURL(id, url) {

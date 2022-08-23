@@ -27,8 +27,8 @@
 			<a-button
 				html-type="submit"
 				type="primary"
-				:disabled="URLStore.loadingAddingDocs"
-				:loading="URLStore.loadingAddingDocs"
+				:disabled="URLStore.loadingCDDocs"
+				:loading="URLStore.loadingCDDocs"
 			>Agregar</a-button>
 		</a-form-item>
 	</a-form>
