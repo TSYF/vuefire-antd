@@ -105,12 +105,9 @@ const router = useRouter();
 
 const registerUser = () => {
 	userStore.registerUser(user.email, user.password)
-		.then((res) => {
-			user.email = "";
-			user.password = "";
-			user.checkPassword = "";
-			message.success("Successful registry");
-		}).catch((errorCode) => {
+		.then((res) => { user.email = ""; user.password = ""; user.checkPassword = ""; })
+		.then(() => message.success("Successful registry"))
+		.catch((errorCode) => {
 			switch (errorCode) {
 				case "auth/invalid-email":
 					message.error("Credentials don't meet requirements.")
