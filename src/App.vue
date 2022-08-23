@@ -18,4 +18,12 @@ const userStore = useUserStore();
 const loadingSession = userStore.loadingSession;
 </script>
 
-<style scoped></style>
+<style scoped>
+main {
+	min-height: 100%;
+}
+
+section {
+	min-height: 100vh;
+}
+</style>
