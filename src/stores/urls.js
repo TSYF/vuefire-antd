@@ -50,7 +50,8 @@ export const useURLStore = defineStore({
 					this.documents = [...arr];
 				});
 			} catch (error) {
-				console.log(error);
+				console.error(error.code);
+				return error.code;
 			} finally {
 				this.loadingDocs = false;
 			}
