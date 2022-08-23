@@ -36,15 +36,13 @@ export const useUserStore = defineStore({
 		async emailSignIn(email, password) {
 			this.loadingUser = true;
 			try {
-				const user = await signInWithEmailAndPassword(
+				this.user = await signInWithEmailAndPassword(
 					auth,
 					email,
 					password
 				)
 					.then(({ user }) => user)
 					.then(({ email, uid }) => ({ email, uid }));
-				this.user = user;
-				return user;
 			} catch (error) {
 				console.error(error.code);
 				return error.code;

@@ -88,6 +88,7 @@
 </template>
 
 <script setup>
+import { message } from "ant-design-vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue"
 import { useUserStore } from "@/stores/user.js"
 import { useRouter } from "vue-router";
@@ -97,18 +98,37 @@ const userStore = useUserStore();
 
 const router = useRouter();
 
-const login = () => {
+const login = async () => {
 	userStore.emailSignIn(user.email, user.password)
-		.then(() => {
+		.then((res) => {
 			router.push({ name: "home" })
 			user.email = "";
 			user.password = "";
+			return res;
+		}).then((errorCode) => {
+			if (!errorCode) return message.success("Successful sign in");
+
+			switch (errorCode) {
+				case "auth/user-not-found":
+					message.error("Invalid credentials.");
+					break;
+				case "auth/wrong-password":
+					message.error("Invalid credentials.")
+					break;
+				case "auth/invalid-password":
+					message.error("Credentials don't meet requirements.")
+					break;
+				default:
+					message.error("Something went wrong... :c")
+					break;
+			}
 		});
+
 };
 
 const user = reactive({
-	email: '',
-	password: '',
+	email: 'tomas.y@tutanota.com',
+	password: '123456',
 })
 </script>
 
