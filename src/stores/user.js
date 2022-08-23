@@ -27,7 +27,7 @@ export const useUserStore = defineStore({
 				);
 				console.log(user);
 			} catch (error) {
-				console.error(error);
+				console.error(error.code);
 			} finally {
 				this.loadingUser = false;
 			}
@@ -45,7 +45,7 @@ export const useUserStore = defineStore({
 				this.user = user;
 				return user;
 			} catch (error) {
-				console.error(error);
+				console.error(error.code);
 			} finally {
 				this.loadingUser = false;
 			}
@@ -55,9 +55,9 @@ export const useUserStore = defineStore({
 			try {
 				await signOut(auth);
 				this.user = {};
-				URLStore.$reset();
+				URLStore.$reset(); //*#-- Resets all data in the store to it's initial state 
 			} catch (error) {
-				console.error(error);
+				console.error(error.code);
 			}
 		},
 		currentUser() {

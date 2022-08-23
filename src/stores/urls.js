@@ -73,7 +73,7 @@ export const useURLStore = defineStore({
 
 				return docRef;
 			} catch (error) {
-				console.error(error);
+				console.error(error.code);
 			} finally {
 				this.loadingDocs = false;
 			}
@@ -94,7 +94,7 @@ export const useURLStore = defineStore({
 					(document) => document.id !== id
 				);
 			} catch (error) {
-				console.error(error);
+				console.error(error.code);
 			} finally {
 			}
 		},
@@ -119,7 +119,7 @@ export const useURLStore = defineStore({
 						: item
 				);
 			} catch (error) {
-				console.error(error);
+				console.error(error.code);
 			} finally {
 			}
 		},
