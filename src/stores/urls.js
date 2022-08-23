@@ -19,6 +19,7 @@ export const useURLStore = defineStore({
 	state: () => ({
 		documents: [],
 		loadingDocs: false,
+		loadingAddingDocs: false
 	}),
 	actions: {
 		async getURLS() {
@@ -58,7 +59,7 @@ export const useURLStore = defineStore({
 		},
 		async addURL(urlName) {
 			try {
-				this.loadingDocs = true;
+				this.loadingAddingDocs = true;
 
 				const url = {
 					name: urlName,
@@ -70,14 +71,12 @@ export const useURLStore = defineStore({
 
 				const docRef = await addDoc(col, url);
 
-				this.documents.push({ editing: false, ...url });
-
-				return docRef;
+				this.documents.push({ editing: false, id: docRef.id, ...url });
 			} catch (error) {
 				console.error(error.code);
 				return error.code;
 			} finally {
-				this.loadingDocs = false;
+				this.loadingAddingDocs = false;
 			}
 		},
 		async deleteURL(id) {
