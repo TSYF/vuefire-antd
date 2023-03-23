@@ -12,8 +12,14 @@
 			<router-link :to="{ name: 'home' }">Home</router-link>
 		</a-menu-item>
 		<a-menu-item
-			key="login"
-			v-if="!isLogged"
+			key="profile"
+			v-if="isLogged"
+		>
+			<router-link :to="{ name: 'profile' }">Profile</router-link>
+		</a-menu-item>
+		<a-menu-item
+		key="login"
+		v-if="!isLogged"
 		>
 			<router-link :to="{ name: 'login' }">Login</router-link>
 		</a-menu-item>
