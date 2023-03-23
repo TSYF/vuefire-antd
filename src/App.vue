@@ -21,6 +21,7 @@ const loadingSession = userStore.loadingSession;
 <style scoped>
 main {
 	min-height: 100%;
+	margin-top: 2rem;
 }
 
 section {
