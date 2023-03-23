@@ -18,12 +18,14 @@
 		"firebase": "^9.18.0",
 		"nanoid": "^4.0.1",
 		"pinia": "^2.0.33",
+		"sass": "^1.59.3",
 		"unplugin-vue-components": "^0.22.12",
 		"vue": "^3.2.47",
 		"vue-router": "^4.1.6"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^3.2.0",
+		"@vitest/coverage-c8": "^0.29.7",
 		"@vue/test-utils": "^2.3.2",
 		"c8": "^7.13.0",
 		"cypress": "^10.11.0",
@@ -31,6 +33,6 @@
 		"prettier": "^2.8.6",
 		"start-server-and-test": "^1.15.4",
 		"vite": "^3.2.5",
-		"vitest": "^0.22.1"
+		"vitest": "^0.29.7"
 	}
 }
