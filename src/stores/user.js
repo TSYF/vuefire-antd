@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { auth } from "@/firebaseConfig.js";
+import { auth, db } from "@/firebaseConfig.js";
 import {
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
@@ -8,6 +8,8 @@ import {
 	signOut,
 } from "firebase/auth";
 import { useURLStore } from "./urls";
+import { doc, getDoc, setDoc } from "firebase/firestore/lite";
+import router from "../router";
 
 export const useUserStore = defineStore({
 	id: "userStore",
@@ -17,6 +19,20 @@ export const useUserStore = defineStore({
 		loadingSession: false,
 	}),
 	actions: {
+		async setUser(user) {
+			try {
+				const docRef = doc(db, "users", user.uid);
+				const docSpan = await getDoc(docRef);
+				
+				if (!docSpan.exists()) {
+					await setDoc(docRef, user);
+				}
+				
+				this.user = user;
+			} catch (error) {
+				console.error(error);
+			}
+		},
 		async registerUser(email, password) {
 			this.loadingUser = true;
 			try {
@@ -25,7 +41,6 @@ export const useUserStore = defineStore({
 					email,
 					password
 				);
-				console.log(user);
 			} catch (error) {
 				console.error(error.code);
 				return Promise.reject(error.code);
@@ -36,13 +51,12 @@ export const useUserStore = defineStore({
 		async emailSignIn(email, password) {
 			this.loadingUser = true;
 			try {
-				this.user = await signInWithEmailAndPassword(
+				await signInWithEmailAndPassword(
 					auth,
 					email,
 					password
-				)
-					.then(({ user }) => user)
-					.then(({ email, uid }) => ({ email, uid }));
+				);
+				router.push({ name: "home" });
 			} catch (error) {
 				console.error(error.code);
 				return Promise.reject(error.code);
@@ -65,9 +79,14 @@ export const useUserStore = defineStore({
 			return new Promise((resolve, reject) => {
 				const unsuscribe = onAuthStateChanged(
 					auth,
-					(user) => {
+					async (user) => {
 						if (user) {
-							this.user = { email: user.email, uid: user.uid };
+							await this.setUser({
+								uid: user.uid,
+								email: user.email,
+								displayName: user.displayName,
+								photoURL: user.photoURL,
+							});
 						} else {
 							this.user = {};
 						}
