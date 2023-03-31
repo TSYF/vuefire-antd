@@ -7,6 +7,8 @@ import "ant-design-vue/dist/antd.css";
 const app = createApp(App);
 const pinia = createPinia();
 
+/* Test */
+
 app.use(pinia);
 app.use(router);
 
